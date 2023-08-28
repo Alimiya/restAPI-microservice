@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node restMongo/index.js",
+    "begin": "node restPostgre/index.js",
+    "proxy": "node apiGateway/gateway.js"
   },
   "keywords": [],
   "author": "",
