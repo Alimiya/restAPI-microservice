@@ -5,7 +5,7 @@ exports.getAllUsers = async (req, res) => {
         const users = await User.find({}, { __v: 0})
         res.json(users)
     } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch users' })
+        res.status(500).json({ error: 'Failed to fetch users', details:error.message })
     }
 }
 
@@ -24,33 +24,38 @@ exports.getUserById = async (req, res) => {
 }
 
 exports.createUser = async (req, res) => {
-    const { surname, name, lastname, email, phone} = req.body
+    const { fname, lname, email, password} = req.body
+    const emailExist = await User.findOne({email})
+
+        if (emailExist) {
+            res.status(400).json({message:"Email already exists"})
+            return
+        }
     try {
         const newUser = await User.create({
-            surname,
-            name,
-            lastname,
+            fname,
+            lname,
             email,
-            phone
+            password
         })
+
         res.status(201).json(newUser)
     } catch (error) {
-        res.status(500).json({ error: 'Failed to create user' })
+        res.status(500).json({ error: 'Failed to create user', details: error.message })
     }
 }
 
 exports.updateUserById = async (req, res) => {
     const { id } = req.params
-    const { surname, name, lastname, email, phone} = req.body
+    const { fname, lname, email, password} = req.body
     try {
         const updatedUser = await User.findByIdAndUpdate(
             id,
             {
-                surname,
-                name,
-                lastname,
+                fname,
+                lname,
                 email,
-                phone
+                password
             },
             { new: true, projection: { __v: 0 } }
         )

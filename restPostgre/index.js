@@ -2,7 +2,7 @@ const express= require('express')
 const userRoute= require('./routes/userRoute')
 const dotenv = require("dotenv")
 
-dotenv.config({path: './config/.env'})
+dotenv.config({path: './restPostgre/config/.env'})
 
 const app=express()
 

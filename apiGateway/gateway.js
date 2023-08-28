@@ -2,20 +2,19 @@ const express = require('express')
 const {createProxyMiddleware} = require('http-proxy-middleware')
 const dotenv = require("dotenv")
 
-dotenv.config({path: './config/.env'})
-dotenv.config({path: '../restMongo/config/.env'})
-dotenv.config({path: '../restPostgre/config/.env'})
+dotenv.config({path: './apiGateway/config/.env'})
 
 
 const app = express()
 
 const routes = {
-    '/api/mongo/users': process.env.URL,
-    '/api/pg/users': process.env.BASE_URL
+    '/api/mongo/users': 'http://localhost:8000',
+    '/api/pg/users': 'http://localhost:6000'
 }
 
 for (const route in routes) {
     const target = routes[route]
+    console.log(`Target for route ${route}: ${target}`)
     app.use(route, createProxyMiddleware({target}))
 }
 
