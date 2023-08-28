@@ -1,0 +1,4 @@
+/node_modules
+/apiGateway/config
+/restMongo/config
+/restPostgre/config
